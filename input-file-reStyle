@@ -1,0 +1,16 @@
+文件上传，不使用现成的轮子就需要自己美化一下html的文件上传样式。
+思想很简单，就是隐藏原来的input，增加label和文件名显示域
+
+<div className="filewrapper">
+    <label htmlFor="uploadFile">选择文件</label>
+    <input type="file" name="file" id="uploadFile" onChange={this.getFileName}/>
+    <span className="filename">{fileName}</span>
+</div>
+
+具体样式按照自己的需要添加。
+filewrapper是最外层的文件上传域
+label中使用了htmlFor和input(type=file)关联起来。注意htmlFor是react里的使用方式，html直接用for就可以啦
+input type=file需要设置样式display:none
+span.filename里显示的获取的file的名字，可以给个默认值哦，写项目中要使用的话。
+
+我在项目中使用的样式就不贴了。
