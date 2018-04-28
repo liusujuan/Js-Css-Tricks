@@ -1,0 +1,31 @@
+最近的项目中需要在上传文件的时候，计算出文件的md5并且发送给后台。
+
+项目框架React的一个老框架 使用的es6+promise
+
+文件的md5算法在javascript领域还是比较成熟的，比较优秀的库是spark-md5
+但是符合项目的react package我找了半天。
+后来在掘金上看到了一个解决方案，拿来借鉴了一下。
+首先附上原地址：https://juejin.im/post/5a33ce0a6fb9a0451f3100b4
+原来的这套解决方案比较全面，文件上传采取了分片模式。我们的项目比较简易啦，自己内部使用（比较少考虑兼容性或者过于低下的性能）且上传的文件都不大，所以
+暂时就没有分片。
+
+使用的package是spark-md5(真的优秀）和html5的File Api
+
+具体代码：
+
+import SparkMD5 from 'spark-md5'
+handleUpload = () => {
+  const that = this;
+  const file = this.state.file;
+  let spark = new SparkMD5.ArrayBuffer();
+  let totalFileReader = new FileReader();
+  totalFileReader.readAsArrayBuffer(file)
+  totalFileReader.onload = function(e){
+      // 对整个totalFile生成md5
+      spark.append(e.target.result)
+      params.md5 = spark.end(); // 计算整个文件的fileMd5
+      //upload post
+  }
+ }
+ 
+ 顺利的取到了文件的md5值。感觉非常有用哦～
